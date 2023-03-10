@@ -1,5 +1,3 @@
-console.log("Linked!");
-
 let mousePaint = false;
 let currentColor = "red";
 
@@ -14,8 +12,25 @@ grid.id = "container";
 grid.addEventListener("mousedown", function () {
     mousePaint = true;
 });
+grid.addEventListener('touchstart', function (event) {
+    event.preventDefault();
+    mousePaint = true;
+    let touch = event.touches[0];
+    let touchX = touch.clientX;
+    let touchY = touch.clientY;
+    let element = document.elementFromPoint(touchX, touchY);
+    if (element.classList.contains("pixel")) {
+        element.style.backgroundColor = currentColor;
+    }
+    console.log(mousePaint);
+});
 grid.addEventListener("mouseup", function () {
     mousePaint = false;
+});
+grid.addEventListener('touchend', function (event) {
+    event.preventDefault();
+    mousePaint = false;
+    console.log(mousePaint);
 });
 document.body.append(grid);
 
@@ -66,6 +81,16 @@ for (let i = 0; i < 3000; i++) {
     });
     pixel.addEventListener("click", function () {
         pixel.style.backgroundColor = currentColor;
+    });
+    pixel.addEventListener('touchmove', function (event) {
+        event.preventDefault();
+        let touch = event.touches[0];
+        let touchX = touch.clientX;
+        let touchY = touch.clientY;
+        let element = document.elementFromPoint(touchX, touchY);
+        if (element.classList.contains("pixel")) {
+            element.style.backgroundColor = currentColor;
+        }
     });
     grid.append(pixel);
 }
@@ -132,7 +157,6 @@ save.addEventListener("click", function () {
         pixelState[id] = color;
     })
     let jsonData = JSON.stringify(pixelState);
-    // let fileName = prompt("Enter File Name:");
     localStorage.setItem("pixel-state", jsonData);
     console.log(pixelState);
 });
@@ -152,8 +176,6 @@ load.addEventListener("mouseover", function () {
     load.style.cursor = "pointer";
 });
 load.addEventListener("click", function () {
-    // let fileName = prompt("Select a file to load:", Object.keys(localStorage)[0]);
-    // console.log(fileName);
     let jsonData = localStorage.getItem("pixel-state");
     if (jsonData) {
         let pixelState = JSON.parse(jsonData);
@@ -165,5 +187,3 @@ load.addEventListener("click", function () {
     }
 });
 palette.appendChild(load);
-
-// comment
