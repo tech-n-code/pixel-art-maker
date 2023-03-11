@@ -1,4 +1,4 @@
-let isMobile = /Mobile/.test(navigator.userAgent);
+let isMobile = true; // /Mobile/.test(navigator.userAgent);
 let mousePaint = false;
 let currentColor = "red";
 let pixelCount = 3000;
