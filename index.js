@@ -76,6 +76,9 @@ palette.addEventListener("touchstart", function (event) {
             event.target.style.border = "2px solid black";
             colorSelected = true;
 		}
+    } else if (element.id === "colorPicker") {
+        let input = document.getElementById("colorPicker");
+        input.click();
     } else if (element.id === "clear") {
         clearGrid();
     } else if (element.id === "save") {
@@ -142,11 +145,11 @@ colorPicker.addEventListener("input", function (event) {
 colorPicker.addEventListener("mouseover", function () {
     colorPicker.style.cursor = "pointer";
 });
-colorPicker.addEventListener("touchstart", function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    colorPicker.click();
-});
+// colorPicker.addEventListener("touchstart", function (event) {
+//     event.preventDefault();
+//     event.stopPropagation();
+//     colorPicker.click();
+// });
 // if (isMobile) {
 //     colorPicker.addEventListener("touchstart", function (event) {
 //         event.preventDefault();
