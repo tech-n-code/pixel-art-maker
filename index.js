@@ -1,7 +1,7 @@
 let isMobile = /Mobile/.test(navigator.userAgent);
 let mousePaint = false;
 let currentColor = "red";
-var pixelCount = 3000;
+let pixelCount = 3000;
 
 let title = document.createElement("div");
 title.id = "title";
@@ -24,7 +24,6 @@ grid.addEventListener('touchstart', function (event) {
     if (element.classList.contains("pixel")) {
         element.style.backgroundColor = currentColor;
     }
-    console.log(mousePaint);
 });
 grid.addEventListener("mouseup", function () {
     mousePaint = false;
@@ -32,7 +31,6 @@ grid.addEventListener("mouseup", function () {
 grid.addEventListener('touchend', function (event) {
     event.preventDefault();
     mousePaint = false;
-    console.log(mousePaint);
 });
 document.body.append(grid);
 
@@ -43,26 +41,49 @@ let palette = document.createElement("div");
 palette.id = "palette";
 let colors = document.querySelectorAll(".color-choice");
 palette.addEventListener("click", function (event) {
-    if (event.target.classList.value === "color-choice") {
+    if (event.target.classList.contains("color-choice")) {
         currentColor = event.target.style.backgroundColor;
         if (colorSelected === true) {
             let colors = document.querySelectorAll('.color-choice');
             colors.forEach(function (color) {
-                    color.style.border = "none";
-            event.target.style.border = "2px solid black";
-                })
+                color.style.border = "none";
+                event.target.style.border = "2px solid black";
+            })
         } else {
             event.target.style.border = "2px solid black";
             colorSelected = true;
         }
     }
-})
+});
+palette.addEventListener('touchstart', function (event) {
+    event.preventDefault();
+    mousePaint = true;
+    let touch = event.touches[0];
+    let touchX = touch.clientX;
+    let touchY = touch.clientY;
+    let element = document.elementFromPoint(touchX, touchY);
+    if (element.classList.contains("color-choice-mobile")) {
+        currentColor = element.id;
+		if (colorSelected === true) {
+            let colors = document.querySelectorAll('.color-choice');
+            colors.forEach(function (color) {
+                color.style.border = "none";
+                event.target.style.border = "2px solid black";
+            })
+		} else {
+            event.target.style.border = "2px solid black";
+            colorSelected = true;
+		}
+	element.style.backgroundColor = currentColor;
+    }
+});
 document.body.append(palette);
 
 /* ===== COLOR CHOICES =====  */
 let colorArr = ["red", "orange", "yellow", "green", "blue", "purple", "brown", "gray", "black", "white"];
 for (let i = 0; i < colorArr.length; i++) {
     let color = document.createElement("div");
+    color.id = colorArr[i];
     color.classList.add("color-choice");
     color.style.backgroundColor = colorArr[i];
     color.addEventListener("mouseover", function () {
@@ -160,7 +181,6 @@ save.addEventListener("click", function () {
     })
     let jsonData = JSON.stringify(pixelState);
     localStorage.setItem("pixel-state", jsonData);
-    console.log(pixelState);
 });
 palette.appendChild(save);
 

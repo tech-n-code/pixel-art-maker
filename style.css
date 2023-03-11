@@ -4,23 +4,25 @@
     border: .5px solid lightgray;
     box-sizing: border-box;
 }
+
 .color-choice {
     width: 25px;
     height: 25px;
     border-radius: 50%;
 }
+
 .color-choice-mobile {
     width: 20px;
     height: 20px;
-    /* border-radius: 50%; */
+    border-radius: 50%;
 }
+
 .tool {
     width: 40px;
     height: 20px;
     border-radius: 50%;
     font-family: sans-serif;
     font-size: 15px;
-    /* line-height: 30px; */
     text-align: center;
     background-color: darkgray;
     border: 2px solid lightgray;
@@ -29,12 +31,13 @@
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
 .spacer {
     width: 5px;
     height: 30px;
     background-color: darkgray;
-    /* border: .5px solid black; */
 }
+
 #container {
     display: grid;
     grid-template-columns: repeat(60, 10px);
@@ -43,6 +46,7 @@
     height: 500px;
     margin: 0 auto;
 }
+
 #palette {
     width: 600px;
     height: 30px;
