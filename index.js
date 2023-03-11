@@ -144,10 +144,11 @@ colorPicker.addEventListener("mouseover", function () {
     colorPicker.style.cursor = "pointer";
 });
 if (isMobile) {
-    colorPicker.addEventListener("click", function (event) {
+    colorPicker.addEventListener("touchstart", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        event.target.click();
+        let input = document.getElementById("colorPicker");
+        input.click();
     });
 }
 palette.append(colorPicker);
