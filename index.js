@@ -60,7 +60,7 @@ palette.addEventListener("click", function (event) {
 palette.addEventListener("touchstart", function (event) {
     event.preventDefault();
     mousePaint = true;
-    let touch = event.touches[0];
+    let touch = event.changedTouches[0];
     let touchX = touch.clientX;
     let touchY = touch.clientY;
     let element = document.elementFromPoint(touchX, touchY);
