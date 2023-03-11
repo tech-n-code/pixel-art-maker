@@ -253,6 +253,7 @@ if (isMobile) {
     let pixelsWide = Math.floor(grid.offsetWidth / 10);
     let pixelsHigh = Math.floor(grid.offsetHeight / 10);
     let totalPixels = pixelsWide * pixelsHigh;
+    pixelCount = totalPixels;
     pixels = document.querySelectorAll(".pixel");
     pixels.forEach(function (pixel) {
         let id = pixel.id;
