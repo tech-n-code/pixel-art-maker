@@ -1,5 +1,7 @@
+let isMobile = /Mobile/.test(navigator.userAgent);
 let mousePaint = false;
 let currentColor = "red";
+var pixelCount = 3000;
 
 let title = document.createElement("div");
 title.id = "title";
@@ -70,7 +72,7 @@ for (let i = 0; i < colorArr.length; i++) {
 }
 
 /* ===== PIXELS =====  */
-for (let i = 0; i < 3000; i++) {
+for (let i = 0; i < pixelCount; i++) {
     let pixel = document.createElement("div")
     pixel.classList.add("pixel");
     pixel.id = i + 1;
@@ -187,3 +189,37 @@ load.addEventListener("click", function () {
     }
 });
 palette.appendChild(load);
+
+let credits = document.createElement("div");
+credits.innerText = "By Will Franceschini \nA Galvanize bootcamp project";
+credits.id = "credits";
+document.body.append(credits);
+
+/* ===== MOBILE CONFIG =====  */
+if (isMobile) {
+    title.style.width = "370px";
+    grid.style.width = "370px";
+    grid.style.height = "600px";
+    grid.style.gridTemplateColumns = "repeat(auto-fit, 10px)";
+    grid.style.gridTemplateRows = "repeat(10px, 10px)";
+    grid.style.gridAutoRows = "10px";
+    palette.style.width = "370px";
+    let spacers = document.querySelectorAll(".spacer");
+    spacers.forEach(function(spacer) {
+        spacer.remove();
+    });
+    let tools = document.querySelectorAll(".color-choice");
+    tools.forEach(function(tool) {
+        tool.classList.add("color-choice-mobile");
+    });
+    let pixelsWide = Math.floor(grid.offsetWidth / 10);
+    let pixelsHigh = Math.floor(grid.offsetHeight / 10);
+    let totalPixels = pixelsWide * pixelsHigh;
+    pixels = document.querySelectorAll(".pixel");
+    pixels.forEach(function (pixel) {
+        let id = pixel.id;
+            if (id > totalPixels) {
+                pixel.remove();
+            }
+        });
+};
