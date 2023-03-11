@@ -135,8 +135,7 @@ palette.appendChild(spacerLG);
 let colorPicker = document.createElement("input");
 colorPicker.type = "color";
 colorPicker.id = "colorPicker";
-colorPicker.classList.add("tool");
-colorPicker.style.height = "25px";
+colorPicker.classList.add("#colorPicker");
 colorPicker.addEventListener("input", function (event) {
     currentColor = event.target.value;
 });
@@ -169,7 +168,7 @@ palette.appendChild(spacerSM);
 let clear = document.createElement("div");
 clear.id = "clear";
 clear.classList.add("tool");
-clear.innerText = "Clear"
+clear.innerText = "Clear";
 clear.addEventListener("mouseover", function () {
     clear.style.cursor = "pointer";
 });
