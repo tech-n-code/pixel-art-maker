@@ -150,6 +150,13 @@ if (isMobile) {
         let input = document.getElementById("colorPicker");
         input.click();
     });
+} else {
+    colorPicker.addEventListener("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        let input = document.getElementById("colorPicker");
+        input.click();
+    });
 }
 palette.append(colorPicker);
 
