@@ -49,10 +49,18 @@ palette.addEventListener("click", function (event) {
             let colors = document.querySelectorAll(".color-choice");
             colors.forEach(function (color) {
                 color.style.border = "none";
-                event.target.style.border = "3px solid black";
+                if (currentColor === "black") {
+                    event.target.style.border = "3px solid white";
+                } else {
+                    event.target.style.border = "3px solid black";
+                }
             })
         } else {
-            event.target.style.border = "3px solid black";
+            if (currentColor === "black") {
+                event.target.style.border = "3px solid white";
+            } else {
+                event.target.style.border = "3px solid black";
+            }
             colorSelected = true;
         }
     }
@@ -70,10 +78,18 @@ palette.addEventListener("touchstart", function (event) {
             let colors = document.querySelectorAll(".color-choice-mobile");
             colors.forEach(function (color) {
                 color.style.border = "none";
-                event.target.style.border = "2px solid black";
+                if (currentColor === "black") {
+                    event.target.style.border = "2px solid white";
+                } else {
+                    event.target.style.border = "2px solid black";
+                }
             })
 		} else {
-            event.target.style.border = "2px solid black";
+            if (currentColor === "black") {
+                event.target.style.border = "2px solid white";
+            } else {
+                event.target.style.border = "2px solid black";
+            }
             colorSelected = true;
 		}
     } else if (element.id === "colorPicker") {
@@ -107,7 +123,7 @@ for (let i = 0; i < pixelCount; i++) {
     let pixel = document.createElement("div")
     pixel.classList.add("pixel");
     pixel.id = i + 1;
-    pixel.addEventListener("mousemove", function () {
+    pixel.addEventListener("mouseover", function () {
         if (mousePaint === true) {
             pixel.style.backgroundColor = currentColor;
         }
@@ -139,32 +155,15 @@ let colorPicker = document.createElement("input");
 colorPicker.type = "color";
 colorPicker.id = "colorPicker";
 colorPicker.classList.add("#colorPicker");
-colorPicker.addEventListener("input", function (event) {
+colorPicker.addEventListener("click", function() {
+    colorPicker.click();
+});
+colorPicker.addEventListener("input", function(event) {
     currentColor = event.target.value;
 });
 colorPicker.addEventListener("mouseover", function () {
     colorPicker.style.cursor = "pointer";
 });
-// colorPicker.addEventListener("touchstart", function (event) {
-//     event.preventDefault();
-//     event.stopPropagation();
-//     colorPicker.click();
-// });
-// if (isMobile) {
-//     colorPicker.addEventListener("touchstart", function (event) {
-//         event.preventDefault();
-//         event.stopPropagation();
-//         let input = document.getElementById("colorPicker");
-//         input.click();
-//     });
-// } else {
-//     colorPicker.addEventListener("click", function (event) {
-//         event.preventDefault();
-//         event.stopPropagation();
-//         let input = document.getElementById("colorPicker");
-//         input.click();
-//     });
-// }
 palette.append(colorPicker);
 
 /* ===== SMALL SPACER =====  */
