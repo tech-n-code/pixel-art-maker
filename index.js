@@ -12,27 +12,30 @@ document.body.append(title);
 let grid = document.createElement("div");
 grid.id = "container";
 grid.classList.add("container");
-grid.addEventListener("mousedown", function () {
-    mousePaint = true;
-});
-grid.addEventListener("touchstart", function (event) {
-    event.preventDefault();
-    mousePaint = true;
-    let touch = event.touches[0];
-    let touchX = touch.clientX;
-    let touchY = touch.clientY;
-    let element = document.elementFromPoint(touchX, touchY);
-    if (element.classList.contains("pixel")) {
-        element.style.backgroundColor = currentColor;
-    }
-});
-grid.addEventListener("mouseup", function () {
-    mousePaint = false;
-});
-grid.addEventListener("touchend", function (event) {
-    event.preventDefault();
-    mousePaint = false;
-});
+if (isMobile) {
+    grid.addEventListener("touchstart", function (event) {
+        event.preventDefault();
+        mousePaint = true;
+        let touch = event.touches[0];
+        let touchX = touch.clientX;
+        let touchY = touch.clientY;
+        let element = document.elementFromPoint(touchX, touchY);
+        if (element.classList.contains("pixel")) {
+            element.style.backgroundColor = currentColor;
+        }
+    });
+    grid.addEventListener("touchend", function (event) {
+        event.preventDefault();
+        mousePaint = false;
+    });
+} else {
+    grid.addEventListener("mousedown", function () {
+        mousePaint = true;
+    });
+    grid.addEventListener("mouseup", function () {
+        mousePaint = false;
+    });
+}
 document.body.append(grid);
 
 let colorSelected = false;
