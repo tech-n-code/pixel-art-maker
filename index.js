@@ -94,7 +94,7 @@ palette.addEventListener("touchstart", function (event) {
 		}
     } else if (element.id === "colorPicker") {
         let input = document.getElementById("colorPicker");
-        input.click();
+        input.dispatchEvent(new MouseEvent('click'))
     } else if (element.id === "clear") {
         clearGrid();
     } else if (element.id === "save") {
