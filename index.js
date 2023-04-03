@@ -2,6 +2,7 @@ let isMobile = /Mobile/.test(navigator.userAgent);
 let mousePaint = false;
 let currentColor = "red";
 let pixelCount = 3000;
+let colorSelected = false;
 
 let title = document.createElement("div");
 title.id = "title";
@@ -38,9 +39,33 @@ if (isMobile) {
 }
 document.body.append(grid);
 
-let colorSelected = false;
+/* ===== PIXELS =====  */
+for (let i = 0; i < pixelCount; i++) {
+    let pixel = document.createElement("div")
+    pixel.classList.add("pixel");
+    pixel.id = i + 1;
+    pixel.addEventListener("mouseover", function () {
+        if (mousePaint === true) {
+            pixel.style.backgroundColor = currentColor;
+        }
+    });
+    pixel.addEventListener("click", function () {
+        pixel.style.backgroundColor = currentColor;
+    });
+    pixel.addEventListener("touchmove", function (event) {
+        event.preventDefault();
+        let touch = event.touches[0];
+        let touchX = touch.clientX;
+        let touchY = touch.clientY;
+        let element = document.elementFromPoint(touchX, touchY);
+        if (element.classList.contains("pixel")) {
+            element.style.backgroundColor = currentColor;
+        }
+    });
+    grid.append(pixel);
+}
 
-/* ===== PALETTE =====  */
+/* ===== COLOR PALETTE =====  */
 let palette = document.createElement("div");
 palette.id = "palette";
 palette.classList.add("palette");
@@ -98,28 +123,6 @@ palette.addEventListener("touchstart", function (event) {
 });
 document.body.append(palette);
 
-let paletteBottom = document.createElement("div");
-paletteBottom.id = "palette-bottom";
-paletteBottom.classList.add("palette-bottom");
-paletteBottom.addEventListener("touchstart", function (event) {
-    event.preventDefault();
-    let touch = event.changedTouches[0];
-    let touchX = touch.clientX;
-    let touchY = touch.clientY;
-    let element = document.elementFromPoint(touchX, touchY);
-    if (element.id === "colorPicker") {
-        let input = document.getElementById("colorPicker");
-        input.dispatchEvent(new MouseEvent("click"));
-    } else if (element.id === "clear") {
-        clearGrid();
-    } else if (element.id === "save") {
-        savePixelsState();
-    } else if (element.id === "load") {
-        loadPixelsState();
-    }
-});
-document.body.append(paletteBottom);
-
 /* ===== COLOR CHOICES =====  */
 let colorArr = ["red", "orange", "yellow", "green", "blue", "turquoise", "darkviolet", "brown", "gray", "black", "white"];
 for (let i = 0; i < colorArr.length; i++) {
@@ -133,31 +136,30 @@ for (let i = 0; i < colorArr.length; i++) {
     palette.appendChild(color);
 }
 
-/* ===== PIXELS =====  */
-for (let i = 0; i < pixelCount; i++) {
-    let pixel = document.createElement("div")
-    pixel.classList.add("pixel");
-    pixel.id = i + 1;
-    pixel.addEventListener("mouseover", function () {
-        if (mousePaint === true) {
-            pixel.style.backgroundColor = currentColor;
+/* ===== TOOLS PALETTE =====  */
+let paletteTools = document.createElement("div");
+paletteTools.id = "palette-tools";
+paletteTools.classList.add("palette-tools");
+// paletteTools.addEventListener("touchstart", function (event) {
+//     event.preventDefault();
+//     let touch = event.changedTouches[0];
+//     let touchX = touch.clientX;
+//     let touchY = touch.clientY;
+//     let element = document.elementFromPoint(touchX, touchY);
+paletteTools.addEventListener("click", function (event) {
+    let element = event.target;
+    if (element.id === "colorPicker") {
+            let input = document.getElementById("colorPicker");
+            input.dispatchEvent(new MouseEvent("click"));
+        } else if (element.id === "clear") {
+            clearGrid();
+        } else if (element.id === "save") {
+            savePixelsState();
+        } else if (element.id === "load") {
+            loadPixelsState();
         }
-    });
-    pixel.addEventListener("click", function () {
-        pixel.style.backgroundColor = currentColor;
-    });
-    pixel.addEventListener("touchmove", function (event) {
-        event.preventDefault();
-        let touch = event.touches[0];
-        let touchX = touch.clientX;
-        let touchY = touch.clientY;
-        let element = document.elementFromPoint(touchX, touchY);
-        if (element.classList.contains("pixel")) {
-            element.style.backgroundColor = currentColor;
-        }
-    });
-    grid.append(pixel);
-}
+});
+document.body.append(paletteTools);
 
 /* ===== COLOR PICKER =====  */
 let colorPicker = document.createElement("input");
@@ -166,7 +168,7 @@ colorPicker.id = "colorPicker";
 colorPicker.classList.add("#colorPicker");
 colorPicker.addEventListener("click", function() {
     this.value = "#000000";
-    colorPicker.click();
+    // colorPicker.click();
 });
 colorPicker.addEventListener("input", function(event) {
     currentColor = event.target.value;
@@ -174,7 +176,7 @@ colorPicker.addEventListener("input", function(event) {
 colorPicker.addEventListener("mouseover", function () {
     colorPicker.style.cursor = "pointer";
 });
-paletteBottom.append(colorPicker);
+paletteTools.append(colorPicker);
 
 /* ===== CLEAR BUTTON =====  */
 let clear = document.createElement("div");
@@ -185,7 +187,7 @@ clear.addEventListener("mouseover", function () {
     clear.style.cursor = "pointer";
 });
 clear.addEventListener("click", clearGrid);
-paletteBottom.appendChild(clear);
+paletteTools.appendChild(clear);
 
 function clearGrid() {
     let pixels = document.querySelectorAll(".pixel");
@@ -203,7 +205,7 @@ save.addEventListener("mouseover", function () {
     save.style.cursor = "pointer";
 });
 save.addEventListener("click", savePixelsState);
-paletteBottom.appendChild(save);
+paletteTools.appendChild(save);
 
 function savePixelsState() {
     let pixelState = {};
@@ -226,7 +228,7 @@ load.addEventListener("mouseover", function () {
     load.style.cursor = "pointer";
 });
 load.addEventListener("click", loadPixelsState);
-paletteBottom.appendChild(load);
+paletteTools.appendChild(load);
 
 function loadPixelsState() {
     let jsonData = localStorage.getItem("pixel-state");
@@ -250,7 +252,7 @@ if (isMobile) {
     title.style.width = "370px";
     grid.classList.add("container-mobile");
     palette.style.width = "370px";
-    paletteBottom.style.width = "370px";
+    paletteTools.style.width = "370px";
     let pixelsWide = Math.floor(grid.offsetWidth / 10);
     let pixelsHigh = Math.floor(grid.offsetHeight / 10);
     let totalPixels = pixelsWide * pixelsHigh;
