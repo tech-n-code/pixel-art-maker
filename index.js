@@ -190,18 +190,8 @@ paletteTools.appendChild(clear);
 
 function clearGrid() {
     let pixels = document.querySelectorAll(".pixel");
-    let delay = 0;
     pixels.forEach(function (pixel) {
-        if (pixel.style.backgroundColor !== "white") {
-            setTimeout(function () {
-                pixel.style.animation = "fall .5s forwards";
-            }, delay);
-            delay += .5;
-            setTimeout(function () {
-                pixel.style.backgroundColor = "white";
-                pixel.style.animation = "";
-            }, 800);
-        }
+        pixel.style.backgroundColor = "white";
     });
 }
 

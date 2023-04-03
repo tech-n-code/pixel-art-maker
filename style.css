@@ -104,9 +104,3 @@
     text-align: center;
     margin-top: 10px;
 }
-
-@keyframes fall {
-    to {
-        transform: translate(0, 100vh);
-    }
-}
