@@ -8,15 +8,15 @@
 .color-choice {
     width: 25px;
     height: 25px;
-    margin: 5px;
+    margin: 3px;
     border-radius: 50%;
     box-sizing: border-box;
 }
 
 .tool {
     width: 40px;
-    height: 20px;
-    line-height: 20px;
+    height: 25px;
+    line-height: 25px;
     margin: 5px;
     font-family: sans-serif;
     font-size: 14px;
@@ -31,7 +31,7 @@
 
 #colorPicker {
     width: 40px;
-    height: 25px;
+    height: 30px;
     margin: 5px;
     background-color: darkgray;
     border: 2px solid lightgray;

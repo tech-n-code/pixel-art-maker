@@ -121,7 +121,7 @@ paletteBottom.addEventListener("touchstart", function (event) {
 document.body.append(paletteBottom);
 
 /* ===== COLOR CHOICES =====  */
-let colorArr = ["red", "orange", "yellow", "green", "blue", "purple", "brown", "gray", "black", "white"];
+let colorArr = ["red", "orange", "yellow", "green", "blue", "turquoise", "darkviolet", "brown", "gray", "black", "white"];
 for (let i = 0; i < colorArr.length; i++) {
     let color = document.createElement("div");
     color.id = colorArr[i];
