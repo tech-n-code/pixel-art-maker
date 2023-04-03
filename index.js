@@ -156,7 +156,7 @@ colorPicker.type = "color";
 colorPicker.id = "colorPicker";
 colorPicker.classList.add("#colorPicker");
 colorPicker.addEventListener("click", function() {
-    colorPicker.click();
+    this.value = "#000000";
 });
 colorPicker.addEventListener("input", function(event) {
     currentColor = event.target.value;
