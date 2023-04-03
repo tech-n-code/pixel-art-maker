@@ -74,10 +74,10 @@ palette.addEventListener("touchstart", function (event) {
     let touchX = touch.clientX;
     let touchY = touch.clientY;
     let element = document.elementFromPoint(touchX, touchY);
-    if (element.classList.contains("color-choice-mobile")) {
+    if (element.classList.contains("color-choice")) {
         currentColor = element.id;
 		if (colorSelected === true) {
-            let colors = document.querySelectorAll(".color-choice-mobile");
+            let colors = document.querySelectorAll(".color-choice");
             colors.forEach(function (color) {
                 color.style.border = "none";
                 if (currentColor === "black") {
@@ -94,7 +94,20 @@ palette.addEventListener("touchstart", function (event) {
             }
             colorSelected = true;
 		}
-    } else if (element.id === "colorPicker") {
+    }
+});
+document.body.append(palette);
+
+let paletteBottom = document.createElement("div");
+paletteBottom.id = "palette-bottom";
+paletteBottom.classList.add("palette-bottom");
+paletteBottom.addEventListener("touchstart", function (event) {
+    event.preventDefault();
+    let touch = event.changedTouches[0];
+    let touchX = touch.clientX;
+    let touchY = touch.clientY;
+    let element = document.elementFromPoint(touchX, touchY);
+    if (element.id === "colorPicker") {
         let input = document.getElementById("colorPicker");
         input.dispatchEvent(new MouseEvent("click"));
     } else if (element.id === "clear") {
@@ -104,9 +117,8 @@ palette.addEventListener("touchstart", function (event) {
     } else if (element.id === "load") {
         loadPixelsState();
     }
-    mousePaint = true;
 });
-document.body.append(palette);
+document.body.append(paletteBottom);
 
 /* ===== COLOR CHOICES =====  */
 let colorArr = ["red", "orange", "yellow", "green", "blue", "purple", "brown", "gray", "black", "white"];
@@ -147,12 +159,6 @@ for (let i = 0; i < pixelCount; i++) {
     grid.append(pixel);
 }
 
-/* ===== LARGE SPACER =====  */
-let spacerLG = document.createElement("div");
-spacerLG.classList.add("spacer");
-spacerLG.style.width = "30px";
-palette.appendChild(spacerLG);
-
 /* ===== COLOR PICKER =====  */
 let colorPicker = document.createElement("input");
 colorPicker.type = "color";
@@ -168,12 +174,7 @@ colorPicker.addEventListener("input", function(event) {
 colorPicker.addEventListener("mouseover", function () {
     colorPicker.style.cursor = "pointer";
 });
-palette.append(colorPicker);
-
-/* ===== SMALL SPACER =====  */
-let spacerSM = document.createElement("div");
-spacerSM.classList.add("spacer");
-palette.appendChild(spacerSM);
+paletteBottom.append(colorPicker);
 
 /* ===== CLEAR BUTTON =====  */
 let clear = document.createElement("div");
@@ -184,7 +185,7 @@ clear.addEventListener("mouseover", function () {
     clear.style.cursor = "pointer";
 });
 clear.addEventListener("click", clearGrid);
-palette.appendChild(clear);
+paletteBottom.appendChild(clear);
 
 function clearGrid() {
     let pixels = document.querySelectorAll(".pixel");
@@ -192,11 +193,6 @@ function clearGrid() {
             pixel.style.backgroundColor = "white";
     })
 }
-
-/* ===== 2ND SMALL SPACER =====  */
-let spacerSM2 = document.createElement("div");
-spacerSM2.classList.add("spacer");
-palette.appendChild(spacerSM2);
 
 /* ===== SAVE BUTTON =====  */
 let save = document.createElement("div");
@@ -207,7 +203,7 @@ save.addEventListener("mouseover", function () {
     save.style.cursor = "pointer";
 });
 save.addEventListener("click", savePixelsState);
-palette.appendChild(save);
+paletteBottom.appendChild(save);
 
 function savePixelsState() {
     let pixelState = {};
@@ -221,11 +217,6 @@ function savePixelsState() {
     localStorage.setItem("pixel-state", jsonData);
 }
 
-/* ===== 3RD SMALL SPACER =====  */
-let spacerSM3 = document.createElement("div");
-spacerSM3.classList.add("spacer");
-palette.appendChild(spacerSM3);
-
 /* ===== LOAD BUTTON =====  */
 let load = document.createElement("div");
 load.id = "load";
@@ -235,9 +226,9 @@ load.addEventListener("mouseover", function () {
     load.style.cursor = "pointer";
 });
 load.addEventListener("click", loadPixelsState);
-palette.appendChild(load);
+paletteBottom.appendChild(load);
 
-function loadPixelsState () {
+function loadPixelsState() {
     let jsonData = localStorage.getItem("pixel-state");
     if (jsonData) {
         let pixelState = JSON.parse(jsonData);
@@ -259,15 +250,7 @@ if (isMobile) {
     title.style.width = "370px";
     grid.classList.add("container-mobile");
     palette.style.width = "370px";
-    palette.style.height = "50px";
-    let spacers = document.querySelectorAll(".spacer");
-    spacers.forEach(function(spacer) {
-        spacer.remove();
-    });
-    let tools = document.querySelectorAll(".color-choice");
-    tools.forEach(function(tool) {
-        tool.classList.add("color-choice-mobile");
-    });
+    paletteBottom.style.width = "370px";
     let pixelsWide = Math.floor(grid.offsetWidth / 10);
     let pixelsHigh = Math.floor(grid.offsetHeight / 10);
     let totalPixels = pixelsWide * pixelsHigh;
@@ -275,8 +258,8 @@ if (isMobile) {
     pixels = document.querySelectorAll(".pixel");
     pixels.forEach(function (pixel) {
         let id = pixel.id;
-            if (id > totalPixels) {
-                pixel.remove();
-            }
-        });
+        if (id > totalPixels) {
+            pixel.remove();
+        }
+    });
 };

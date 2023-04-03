@@ -8,16 +8,8 @@
 .color-choice {
     width: 25px;
     height: 25px;
-    border-radius: 50%;
     margin: 5px;
-    box-sizing: border-box;
-}
-
-.color-choice-mobile {
-    width: 23px;
-    height: 23px;
     border-radius: 50%;
-    margin: 0;
     box-sizing: border-box;
 }
 
@@ -25,6 +17,7 @@
     width: 40px;
     height: 20px;
     line-height: 20px;
+    margin: 5px;
     font-family: sans-serif;
     font-size: 14px;
     text-align: center;
@@ -39,18 +32,13 @@
 #colorPicker {
     width: 40px;
     height: 25px;
+    margin: 5px;
     background-color: darkgray;
     border: 2px solid lightgray;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-}
-
-.spacer {
-    width: 5px;
-    height: 30px;
-    background-color: darkgray;
 }
 
 .container {
@@ -77,11 +65,21 @@
     height: 40px;
     margin: 0 auto;
     background-color: darkgray;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.palette-bottom {
+    width: 600px;
+    height: 40px;
+    margin: 0 auto;
+    background-color: darkgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 #title {
