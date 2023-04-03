@@ -9,7 +9,7 @@ title.innerText = "Pixel Art Maker";
 document.body.append(title);
 
 /* ===== GRID / CANVAS =====  */
-let grid = document.createElement("div")
+let grid = document.createElement("div");
 grid.id = "container";
 grid.classList.add("container");
 grid.addEventListener("mousedown", function () {
@@ -67,7 +67,6 @@ palette.addEventListener("click", function (event) {
 });
 palette.addEventListener("touchstart", function (event) {
     event.preventDefault();
-    mousePaint = true;
     let touch = event.changedTouches[0];
     let touchX = touch.clientX;
     let touchY = touch.clientY;
@@ -94,7 +93,7 @@ palette.addEventListener("touchstart", function (event) {
 		}
     } else if (element.id === "colorPicker") {
         let input = document.getElementById("colorPicker");
-        input.dispatchEvent(new MouseEvent('click'))
+        input.dispatchEvent(new MouseEvent("click"));
     } else if (element.id === "clear") {
         clearGrid();
     } else if (element.id === "save") {
@@ -102,6 +101,7 @@ palette.addEventListener("touchstart", function (event) {
     } else if (element.id === "load") {
         loadPixelsState();
     }
+    mousePaint = true;
 });
 document.body.append(palette);
 
@@ -157,6 +157,7 @@ colorPicker.id = "colorPicker";
 colorPicker.classList.add("#colorPicker");
 colorPicker.addEventListener("click", function() {
     this.value = "#000000";
+    colorPicker.click();
 });
 colorPicker.addEventListener("input", function(event) {
     currentColor = event.target.value;
