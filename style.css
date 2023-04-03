@@ -1,7 +1,7 @@
 .pixel {
     width: 10px;
     height: 10px;
-    border: .5px solid lightgray;
+    border: .25px solid lightgray;
     box-sizing: border-box;
 }
 
@@ -45,6 +45,7 @@
     display: grid;
     grid-template-columns: repeat(60, 10px);
     grid-template-rows: repeat(50, 10px);
+    grid-auto-rows: 10px;
     width: 600px;
     height: 500px;
     margin: 0 auto;
@@ -85,12 +86,12 @@
 #title {
     width: 600px;
     height: 30px;
+    line-height: 30px;
     margin: 0 auto;
     color:black;
     font-family: sans-serif;
     font-weight: bold;
     text-align: center;
-    line-height: 30px;
     background-color: darkgray;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -102,4 +103,10 @@
     font-size: 10px;
     text-align: center;
     margin-top: 10px;
+}
+
+@keyframes fall {
+    to {
+        transform: translate(0, 100vh);
+    }
 }

@@ -41,27 +41,30 @@ document.body.append(grid);
 
 /* ===== PIXELS =====  */
 for (let i = 0; i < pixelCount; i++) {
-    let pixel = document.createElement("div")
+    let pixel = document.createElement("div");
     pixel.classList.add("pixel");
     pixel.id = i + 1;
-    pixel.addEventListener("mouseover", function () {
-        if (mousePaint === true) {
+    if (isMobile) {
+        pixel.addEventListener("touchmove", function (event) {
+            event.preventDefault();
+            let touch = event.touches[0];
+            let touchX = touch.clientX;
+            let touchY = touch.clientY;
+            let element = document.elementFromPoint(touchX, touchY);
+            if (element.classList.contains("pixel")) {
+                element.style.backgroundColor = currentColor;
+            }
+        });
+    } else {
+        pixel.addEventListener("mouseover", function () {
+            if (mousePaint === true) {
+                pixel.style.backgroundColor = currentColor;
+            }
+        });
+        pixel.addEventListener("click", function () {
             pixel.style.backgroundColor = currentColor;
-        }
-    });
-    pixel.addEventListener("click", function () {
-        pixel.style.backgroundColor = currentColor;
-    });
-    pixel.addEventListener("touchmove", function (event) {
-        event.preventDefault();
-        let touch = event.touches[0];
-        let touchX = touch.clientX;
-        let touchY = touch.clientY;
-        let element = document.elementFromPoint(touchX, touchY);
-        if (element.classList.contains("pixel")) {
-            element.style.backgroundColor = currentColor;
-        }
-    });
+        });
+    }
     grid.append(pixel);
 }
 
@@ -70,57 +73,60 @@ let palette = document.createElement("div");
 palette.id = "palette";
 palette.classList.add("palette");
 let colors = document.querySelectorAll(".color-choice");
-palette.addEventListener("click", function (event) {
-    if (event.target.classList.contains("color-choice")) {
-        currentColor = event.target.style.backgroundColor;
-        if (colorSelected === true) {
-            let colors = document.querySelectorAll(".color-choice");
-            colors.forEach(function (color) {
-                color.style.border = "none";
-                if (currentColor === "black") {
-                    event.target.style.border = "3px solid white";
-                } else {
-                    event.target.style.border = "3px solid black";
-                }
-            })
-        } else {
-            if (currentColor === "black") {
-                event.target.style.border = "3px solid white";
+if (isMobile) {
+    palette.addEventListener("touchstart", function (event) {
+        event.preventDefault();
+        let touch = event.changedTouches[0];
+        let touchX = touch.clientX;
+        let touchY = touch.clientY;
+        let element = document.elementFromPoint(touchX, touchY);
+        if (element.classList.contains("color-choice")) {
+            currentColor = element.id;
+            if (colorSelected === true) {
+                let colors = document.querySelectorAll(".color-choice");
+                colors.forEach(function (color) {
+                    color.style.border = "none";
+                    if (currentColor === "black") {
+                        event.target.style.border = "2px solid white";
+                    } else {
+                        event.target.style.border = "2px solid black";
+                    }
+                })
             } else {
-                event.target.style.border = "3px solid black";
-            }
-            colorSelected = true;
-        }
-    }
-});
-palette.addEventListener("touchstart", function (event) {
-    event.preventDefault();
-    let touch = event.changedTouches[0];
-    let touchX = touch.clientX;
-    let touchY = touch.clientY;
-    let element = document.elementFromPoint(touchX, touchY);
-    if (element.classList.contains("color-choice")) {
-        currentColor = element.id;
-		if (colorSelected === true) {
-            let colors = document.querySelectorAll(".color-choice");
-            colors.forEach(function (color) {
-                color.style.border = "none";
                 if (currentColor === "black") {
                     event.target.style.border = "2px solid white";
                 } else {
                     event.target.style.border = "2px solid black";
                 }
-            })
-		} else {
-            if (currentColor === "black") {
-                event.target.style.border = "2px solid white";
-            } else {
-                event.target.style.border = "2px solid black";
+                colorSelected = true;
             }
-            colorSelected = true;
-		}
-    }
-});
+        }
+    });
+} else {
+    palette.addEventListener("click", function (event) {
+        if (event.target.classList.contains("color-choice")) {
+            currentColor = event.target.style.backgroundColor;
+            if (colorSelected === true) {
+                let colors = document.querySelectorAll(".color-choice");
+                colors.forEach(function (color) {
+                    color.style.border = "none";
+                    if (currentColor === "black") {
+                        event.target.style.border = "3px solid white";
+                    } else {
+                        event.target.style.border = "3px solid black";
+                    }
+                })
+            } else {
+                if (currentColor === "black") {
+                    event.target.style.border = "3px solid white";
+                } else {
+                    event.target.style.border = "3px solid black";
+                }
+                colorSelected = true;
+            }
+        }
+    });
+}
 document.body.append(palette);
 
 /* ===== COLOR CHOICES =====  */
@@ -141,17 +147,13 @@ let paletteTools = document.createElement("div");
 paletteTools.id = "palette-tools";
 paletteTools.classList.add("palette-tools");
 paletteTools.addEventListener("touchstart", function (event) {
-//     event.preventDefault();
     let touch = event.changedTouches[0];
     let touchX = touch.clientX;
     let touchY = touch.clientY;
     let element = document.elementFromPoint(touchX, touchY);
-// paletteTools.addEventListener("click", function (event) {
-    // let element = event.target;
     if (element.id === "colorPicker") {
-            let input = document.getElementById("colorPicker");
-            input.click();
-            // input.dispatchEvent(new MouseEvent("click"));
+        let input = document.getElementById("colorPicker");
+        input.click();
         } else if (element.id === "clear") {
             clearGrid();
         } else if (element.id === "save") {
@@ -167,10 +169,6 @@ let colorPicker = document.createElement("input");
 colorPicker.type = "color";
 colorPicker.id = "colorPicker";
 colorPicker.classList.add("#colorPicker");
-colorPicker.addEventListener("click", function() {
-    this.value = "#000000";
-    // colorPicker.click();
-});
 colorPicker.addEventListener("input", function(event) {
     currentColor = event.target.value;
 });
@@ -192,9 +190,19 @@ paletteTools.appendChild(clear);
 
 function clearGrid() {
     let pixels = document.querySelectorAll(".pixel");
+    let delay = 0;
     pixels.forEach(function (pixel) {
-            pixel.style.backgroundColor = "white";
-    })
+        if (pixel.style.backgroundColor !== "white") {
+            setTimeout(function () {
+                pixel.style.animation = "fall .5s forwards";
+            }, delay);
+            delay += .5;
+            setTimeout(function () {
+                pixel.style.backgroundColor = "white";
+                pixel.style.animation = "";
+            }, 800);
+        }
+    });
 }
 
 /* ===== SAVE BUTTON =====  */
@@ -215,7 +223,7 @@ function savePixelsState() {
         let id = pixel.id;
         let color = pixel.style.backgroundColor;
         pixelState[id] = color;
-    })
+    });
     let jsonData = JSON.stringify(pixelState);
     localStorage.setItem("pixel-state", jsonData);
 }
@@ -224,7 +232,7 @@ function savePixelsState() {
 let load = document.createElement("div");
 load.id = "load";
 load.classList.add("tool");
-load.innerText = "Load"
+load.innerText = "Load";
 load.addEventListener("mouseover", function () {
     load.style.cursor = "pointer";
 });
@@ -239,7 +247,7 @@ function loadPixelsState() {
         pixels.forEach(function (pixel) {
             let id = pixel.id;
             pixel.style.backgroundColor = pixelState[id];
-        })
+        });
     }
 }
 
