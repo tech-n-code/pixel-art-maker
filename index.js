@@ -140,17 +140,18 @@ for (let i = 0; i < colorArr.length; i++) {
 let paletteTools = document.createElement("div");
 paletteTools.id = "palette-tools";
 paletteTools.classList.add("palette-tools");
-// paletteTools.addEventListener("touchstart", function (event) {
+paletteTools.addEventListener("touchstart", function (event) {
 //     event.preventDefault();
-//     let touch = event.changedTouches[0];
-//     let touchX = touch.clientX;
-//     let touchY = touch.clientY;
-//     let element = document.elementFromPoint(touchX, touchY);
-paletteTools.addEventListener("click", function (event) {
-    let element = event.target;
+    let touch = event.changedTouches[0];
+    let touchX = touch.clientX;
+    let touchY = touch.clientY;
+    let element = document.elementFromPoint(touchX, touchY);
+// paletteTools.addEventListener("click", function (event) {
+    // let element = event.target;
     if (element.id === "colorPicker") {
             let input = document.getElementById("colorPicker");
-            input.dispatchEvent(new MouseEvent("click"));
+            input.click();
+            // input.dispatchEvent(new MouseEvent("click"));
         } else if (element.id === "clear") {
             clearGrid();
         } else if (element.id === "save") {
