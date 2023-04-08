@@ -246,6 +246,37 @@ credits.innerText = "By Will Franceschini \nA Galvanize bootcamp project";
 credits.id = "credits";
 document.body.append(credits);
 
+let gitHubDiv = document.createElement("div");
+let gitHubLogo = document.createElement("img");
+gitHubLogo.src = "./github-mark.png";
+gitHubLogo.style.display = "block";
+gitHubLogo.style.width = "2rem";
+gitHubLogo.style.margin = "0.5rem auto";
+gitHubDiv.appendChild(gitHubLogo);
+document.body.append(gitHubDiv);
+
+gitHubLogo.addEventListener("click", function() {
+    window.open("https://github.com/tech-n-code", "_blank");
+});
+gitHubLogo.addEventListener("mouseover", function () {
+    gitHubLogo.style.cursor = "pointer";
+});
+
+let linkedInDiv = document.createElement("div");
+let linkedInLogo = document.createElement("img");
+linkedInLogo.src = "https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat&logo=Linkedin&logoColor=white";
+linkedInLogo.style.display = "block";
+linkedInLogo.style.margin = "0.5rem auto";
+linkedInDiv.appendChild(linkedInLogo);
+document.body.append(linkedInDiv);
+
+linkedInLogo.addEventListener("click", function() {
+    window.open("https://www.linkedin.com/in/will-franceschini/", "_blank");
+});
+linkedInLogo.addEventListener("mouseover", function () {
+    linkedInLogo.style.cursor = "pointer";
+});
+
 /* ===== MOBILE SCREEN SIZE REFORMAT =====  */
 if (isMobile) {
     title.style.width = "370px";
