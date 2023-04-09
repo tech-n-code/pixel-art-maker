@@ -57,7 +57,7 @@
     grid-template-rows: repeat(50, 10px);
     grid-auto-rows: 10px;
     width: 370px;
-    height: 500px;
+    height: 450px;
     margin: 0 auto;
 }
 
