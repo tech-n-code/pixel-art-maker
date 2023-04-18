@@ -14,26 +14,26 @@ let grid = document.createElement("div");
 grid.id = "container";
 grid.classList.add("container");
 if (isMobile) {
-    grid.addEventListener("touchstart", function (event) {
-        event.preventDefault();
-        mousePaint = true;
-        let touch = event.touches[0];
-        let touchX = touch.clientX;
-        let touchY = touch.clientY;
-        let element = document.elementFromPoint(touchX, touchY);
-        if (element.classList.contains("pixel")) {
-            element.style.backgroundColor = currentColor;
-        }
-    });
-    grid.addEventListener("touchend", function (event) {
+    grid.addEventListener("touchstart", (event) => {
+            event.preventDefault();
+            mousePaint = true;
+            let touch = event.touches[0];
+            let touchX = touch.clientX;
+            let touchY = touch.clientY;
+            let element = document.elementFromPoint(touchX, touchY);
+            if (element.classList.contains("pixel")) {
+                element.style.backgroundColor = currentColor;
+            }
+        });
+    grid.addEventListener("touchend", (event) => {
         event.preventDefault();
         mousePaint = false;
     });
 } else {
-    grid.addEventListener("mousedown", function () {
+    grid.addEventListener("mousedown", () => {
         mousePaint = true;
     });
-    grid.addEventListener("mouseup", function () {
+    grid.addEventListener("mouseup", () => {
         mousePaint = false;
     });
 }
@@ -45,7 +45,7 @@ for (let i = 0; i < pixelCount; i++) {
     pixel.classList.add("pixel");
     pixel.id = i + 1;
     if (isMobile) {
-        pixel.addEventListener("touchmove", function (event) {
+        pixel.addEventListener("touchmove", (event) => {
             event.preventDefault();
             let touch = event.touches[0];
             let touchX = touch.clientX;
@@ -56,12 +56,12 @@ for (let i = 0; i < pixelCount; i++) {
             }
         });
     } else {
-        pixel.addEventListener("mouseover", function () {
+        pixel.addEventListener("mouseover", () => {
             if (mousePaint === true) {
                 pixel.style.backgroundColor = currentColor;
             }
         });
-        pixel.addEventListener("click", function () {
+        pixel.addEventListener("click", () => {
             pixel.style.backgroundColor = currentColor;
         });
     }
@@ -74,7 +74,7 @@ palette.id = "palette";
 palette.classList.add("palette");
 let colors = document.querySelectorAll(".color-choice");
 if (isMobile) {
-    palette.addEventListener("touchstart", function (event) {
+    palette.addEventListener("touchstart", (event) => {
         event.preventDefault();
         let touch = event.changedTouches[0];
         let touchX = touch.clientX;
@@ -84,7 +84,7 @@ if (isMobile) {
             currentColor = element.id;
             if (colorSelected === true) {
                 let colors = document.querySelectorAll(".color-choice");
-                colors.forEach(function (color) {
+                colors.forEach((color) => {
                     color.style.border = "none";
                     if (currentColor === "black") {
                         event.target.style.border = "2px solid white";
@@ -103,12 +103,12 @@ if (isMobile) {
         }
     });
 } else {
-    palette.addEventListener("click", function (event) {
+    palette.addEventListener("click", (event) => {
         if (event.target.classList.contains("color-choice")) {
             currentColor = event.target.style.backgroundColor;
             if (colorSelected === true) {
                 let colors = document.querySelectorAll(".color-choice");
-                colors.forEach(function (color) {
+                colors.forEach((color) => {
                     color.style.border = "none";
                     if (currentColor === "black") {
                         event.target.style.border = "3px solid white";
@@ -136,9 +136,9 @@ for (let i = 0; i < colorArr.length; i++) {
     color.id = colorArr[i];
     color.classList.add("color-choice");
     color.style.backgroundColor = colorArr[i];
-    color.addEventListener("mouseover", function () {
-        color.style.cursor = "pointer";
-    });
+    color.addEventListener("mouseover", () => {
+            color.style.cursor = "pointer";
+        });
     palette.appendChild(color);
 }
 
@@ -146,14 +146,14 @@ for (let i = 0; i < colorArr.length; i++) {
 let paletteTools = document.createElement("div");
 paletteTools.id = "palette-tools";
 paletteTools.classList.add("palette-tools");
-paletteTools.addEventListener("touchstart", function (event) {
-    let touch = event.changedTouches[0];
-    let touchX = touch.clientX;
-    let touchY = touch.clientY;
-    let element = document.elementFromPoint(touchX, touchY);
-    if (element.id === "colorPicker") {
-        let input = document.getElementById("colorPicker");
-        input.click();
+paletteTools.addEventListener("touchstart", (event) => {
+        let touch = event.changedTouches[0];
+        let touchX = touch.clientX;
+        let touchY = touch.clientY;
+        let element = document.elementFromPoint(touchX, touchY);
+        if (element.id === "colorPicker") {
+            let input = document.getElementById("colorPicker");
+            input.click();
         } else if (element.id === "clear") {
             clearGrid();
         } else if (element.id === "save") {
@@ -161,7 +161,7 @@ paletteTools.addEventListener("touchstart", function (event) {
         } else if (element.id === "load") {
             loadPixelsState();
         }
-});
+    });
 document.body.append(paletteTools);
 
 /* ===== COLOR PICKER =====  */
@@ -169,12 +169,12 @@ let colorPicker = document.createElement("input");
 colorPicker.type = "color";
 colorPicker.id = "colorPicker";
 colorPicker.classList.add("#colorPicker");
-colorPicker.addEventListener("input", function(event) {
-    currentColor = event.target.value;
-});
-colorPicker.addEventListener("mouseover", function () {
-    colorPicker.style.cursor = "pointer";
-});
+colorPicker.addEventListener("input", (event) => {
+        currentColor = event.target.value;
+    });
+colorPicker.addEventListener("mouseover", () => {
+        colorPicker.style.cursor = "pointer";
+    });
 paletteTools.append(colorPicker);
 
 /* ===== CLEAR BUTTON =====  */
@@ -182,15 +182,15 @@ let clear = document.createElement("div");
 clear.id = "clear";
 clear.classList.add("tool");
 clear.innerText = "Clear";
-clear.addEventListener("mouseover", function () {
-    clear.style.cursor = "pointer";
-});
+clear.addEventListener("mouseover", () => {
+        clear.style.cursor = "pointer";
+    });
 clear.addEventListener("click", clearGrid);
 paletteTools.appendChild(clear);
 
 function clearGrid() {
     let pixels = document.querySelectorAll(".pixel");
-    pixels.forEach(function (pixel) {
+    pixels.forEach((pixel) => {
         pixel.style.backgroundColor = "white";
     });
 }
@@ -200,16 +200,16 @@ let save = document.createElement("div");
 save.id = "save";
 save.classList.add("tool");
 save.innerText = "Save"
-save.addEventListener("mouseover", function () {
-    save.style.cursor = "pointer";
-});
+save.addEventListener("mouseover", () => {
+        save.style.cursor = "pointer";
+    });
 save.addEventListener("click", savePixelsState);
 paletteTools.appendChild(save);
 
 function savePixelsState() {
     let pixelState = {};
     let pixels = document.querySelectorAll(".pixel");
-    pixels.forEach(function (pixel) {
+    pixels.forEach((pixel) => {
         let id = pixel.id;
         let color = pixel.style.backgroundColor;
         pixelState[id] = color;
@@ -223,9 +223,9 @@ let load = document.createElement("div");
 load.id = "load";
 load.classList.add("tool");
 load.innerText = "Load";
-load.addEventListener("mouseover", function () {
-    load.style.cursor = "pointer";
-});
+load.addEventListener("mouseover", () => {
+        load.style.cursor = "pointer";
+    });
 load.addEventListener("click", loadPixelsState);
 paletteTools.appendChild(load);
 
@@ -234,7 +234,7 @@ function loadPixelsState() {
     if (jsonData) {
         let pixelState = JSON.parse(jsonData);
         let pixels = document.querySelectorAll(".pixel");
-        pixels.forEach(function (pixel) {
+        pixels.forEach((pixel) => {
             let id = pixel.id;
             pixel.style.backgroundColor = pixelState[id];
         });
@@ -255,12 +255,12 @@ gitHubLogo.style.margin = "0.5rem auto";
 gitHubDiv.appendChild(gitHubLogo);
 document.body.append(gitHubDiv);
 
-gitHubLogo.addEventListener("click", function() {
-    window.open("https://github.com/tech-n-code", "_blank");
-});
-gitHubLogo.addEventListener("mouseover", function () {
-    gitHubLogo.style.cursor = "pointer";
-});
+gitHubLogo.addEventListener("click", () => {
+        window.open("https://github.com/tech-n-code", "_blank");
+    });
+gitHubLogo.addEventListener("mouseover", () => {
+        gitHubLogo.style.cursor = "pointer";
+    });
 
 let linkedInDiv = document.createElement("div");
 let linkedInLogo = document.createElement("img");
@@ -270,12 +270,12 @@ linkedInLogo.style.margin = "0.5rem auto";
 linkedInDiv.appendChild(linkedInLogo);
 document.body.append(linkedInDiv);
 
-linkedInLogo.addEventListener("click", function() {
-    window.open("https://www.linkedin.com/in/will-franceschini/", "_blank");
-});
-linkedInLogo.addEventListener("mouseover", function () {
-    linkedInLogo.style.cursor = "pointer";
-});
+linkedInLogo.addEventListener("click", () => {
+        window.open("https://www.linkedin.com/in/will-franceschini/", "_blank");
+    });
+linkedInLogo.addEventListener("mouseover", () => {
+        linkedInLogo.style.cursor = "pointer";
+    });
 
 /* ===== MOBILE SCREEN SIZE REFORMAT =====  */
 if (isMobile) {
@@ -288,7 +288,7 @@ if (isMobile) {
     let totalPixels = pixelsWide * pixelsHigh;
     pixelCount = totalPixels;
     pixels = document.querySelectorAll(".pixel");
-    pixels.forEach(function (pixel) {
+    pixels.forEach((pixel) => {
         let id = pixel.id;
         if (id > totalPixels) {
             pixel.remove();
